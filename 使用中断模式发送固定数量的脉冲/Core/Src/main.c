@@ -74,6 +74,7 @@ void SystemClock_Config(void);
 static int num=5;
 /*
  static int i=0;
+ // 周期中断函数
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 	if(++i==size)i=0;
@@ -84,7 +85,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 }
 */
 static uint16_t cnt = 0;
-// 每发一个脉冲触发一次中断
+// 每发一个脉冲触发一次中断 会频繁调用中断
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 
 	cnt++;
@@ -95,7 +96,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 
 
 }
-
+// 串口接收完成中断  当为阻塞模式接收，按字符数计算   当为中断模式接收也是字符数吧   当为空闲中断接收   会检测到串口的空闲时间 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart== &huart2){
 		if(receiveData[0]==1){
@@ -162,7 +163,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   /* MCU Configuration--------------------------------------------------------*/
 //  rs485_Init();
-//  Init_Ads000(); // 初始化设备外�??????????????????????????????????
+//  Init_Ads000(); // 初始化设备外设 模拟量的芯片
   /* MCU Configuration--------------------------------------------------------*/
 //  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 //  HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
